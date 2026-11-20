@@ -1,29 +1,71 @@
+/* Pixel Album 1.2 "Album book": a sheet of graph paper on a dark linen desk, a strip of bottle-green bookcloth
+   across the top, ribbon bookmarks as navigation. Colors mirror Shared/Inkwell/Inks.swift. */
 :root {
-  --paper: #F7F2E8; --surface: #FFFCF6; --ink: #2E2A26; --muted: #6F665C; --line: #E6DDCC; --accent: #B85A36;
+  --desk: #2D302C; --desk-weave: rgba(255,255,255,.035); --on-desk: #E9ECE4;
+  --paper: #F3F6EE; --card: #FCFDF9; --card-border: #CDD8C7; --ruling: #DCE6D5; --ruling-major: #C6D6BE;
+  --ink: #1E2A21; --ink2: #55625A; --accent: #383D86; --cloth: #23503A; --on-cloth: #F2F4EC;
+  --rust: #9A4127; --indigo: #31367A; --ochre: #7A5D18; --shadow: rgba(0,0,0,.45); --slip-shadow: rgba(30,42,33,.14);
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
   color-scheme: light dark;
 }
 @media (prefers-color-scheme: dark) {
-  :root { --paper: #1E1B18; --surface: #2A2622; --ink: #EDE6DA; --muted: #A89F93; --line: #3A342E; --accent: #E58A62; }
+  :root {
+    --desk: #101210; --desk-weave: rgba(255,255,255,.025); --on-desk: #D5DAD2;
+    --paper: #1A1E1B; --card: #242A25; --card-border: #3A443C; --ruling: #262D28; --ruling-major: #303A32;
+    --ink: #E8EEE5; --ink2: #A3AFA6; --accent: #A8AEF2; --cloth: #2C5E45;
+    --rust: #A9503A; --indigo: #3A4089; --ochre: #7C6220; --shadow: rgba(0,0,0,.7); --slip-shadow: rgba(0,0,0,.45);
+  }
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--paper); color: var(--ink);
-  font: 17px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif; }
-.hero { max-width: 720px; margin: 0 auto; padding: 44px 20px 0; text-align: center; }
-.hero img { width: 88px; height: 88px; border-radius: 20px; border: 1px solid var(--line); }
-.hero h1 { font-family: ui-rounded, "SF Pro Rounded", -apple-system, sans-serif; font-weight: 800; font-size: 42px; letter-spacing: -0.5px; margin: 14px 0 2px; }
-.hero p { margin: 0; color: var(--muted); }
-nav { margin-top: 22px; padding: 10px 0; font-size: 14px; letter-spacing: 1.2px; text-transform: uppercase;
-  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-nav a { color: var(--ink); text-decoration: none; margin: 0 12px; }
-nav a:hover, nav a[aria-current="page"] { color: var(--accent); }
-main { max-width: 720px; margin: 0 auto; padding: 24px 20px 64px; }
-h2 { font-family: ui-rounded, "SF Pro Rounded", -apple-system, sans-serif; font-weight: 800; font-size: 30px; margin: 28px 0 8px; }
-h3 { font-family: ui-rounded, "SF Pro Rounded", -apple-system, sans-serif; font-weight: 700; font-size: 20px; margin: 28px 0 4px;
-  padding-top: 18px; border-top: 1px solid var(--line); }
-a { color: var(--accent); }
-ol, ul { padding-left: 22px; }
+html { background: var(--desk); }
+body { margin: 0; color: var(--ink); font: 17px/1.65 var(--sans); padding: 20px 16px 0;
+  background-color: var(--desk);
+  background-image: repeating-linear-gradient(45deg, var(--desk-weave) 0 1px, transparent 1px 4px),
+                    repeating-linear-gradient(-45deg, var(--desk-weave) 0 1px, transparent 1px 4px); }
+.book { max-width: 800px; margin: 0 auto; box-shadow: 0 10px 0 -4px var(--shadow), 0 18px 28px -10px var(--shadow); border-radius: 6px 6px 10px 10px; }
+.cloth { position: relative; display: flex; align-items: center; gap: 16px; padding: 22px 24px 26px;
+  background-color: var(--cloth); color: var(--on-cloth); border-radius: 6px 6px 0 0;
+  background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.045) 0 1px, transparent 1px 3px),
+                    repeating-linear-gradient(90deg, rgba(0,0,0,.06) 0 1px, transparent 1px 3px);
+  border-bottom: 3px solid rgba(0,0,0,.28); }
+.cloth img { width: 64px; height: 64px; border-radius: 14px; flex: none; box-shadow: 0 0 0 1px rgba(255,255,255,.35); }
+.cloth h1 { margin: 0; font: 700 clamp(30px, 8vw, 42px)/1.1 var(--serif); letter-spacing: .01em; }
+.cloth p { margin: 4px 0 0; font-size: 15px; opacity: .92; }
+nav { position: absolute; z-index: 2; left: 24px; top: 100%; display: flex; gap: 8px; margin-top: 3px; }
+nav a { display: block; width: 84px; padding: 12px 4px 26px; text-align: center; text-decoration: none;
+  font: 600 14px/1.2 var(--sans); letter-spacing: .02em; color: var(--on-cloth);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 12px), 0 100%);
+  transition: padding-bottom .12s; }
+nav a.r0 { background: var(--rust); } nav a.r1 { background: var(--indigo); } nav a.r2 { background: var(--ochre); }
+nav a:hover, nav a:focus-visible, nav a[aria-current="page"] { padding-bottom: 36px; }
+nav a:focus-visible { outline: 3px solid var(--on-cloth); outline-offset: -5px; }
+nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+.sheet { position: relative; background-color: var(--paper); padding: 96px 28px 56px; border-radius: 0 0 10px 10px;
+  background-image:
+    linear-gradient(var(--ruling-major) 1px, transparent 1px), linear-gradient(90deg, var(--ruling-major) 1px, transparent 1px),
+    linear-gradient(var(--ruling) 1px, transparent 1px), linear-gradient(90deg, var(--ruling) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px; background-position: -1px -1px; }
+h2, h3 { font-family: var(--serif); color: var(--ink); }
+h2 { font-size: 34px; font-weight: 700; line-height: 1.15; margin: 0 0 10px; }
+h3 { font-size: 21px; font-weight: 700; margin: 34px 0 4px; padding-top: 14px; border-top: 2px solid var(--ruling-major); }
+p, li { max-width: 62ch; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+ul { padding-left: 22px; }
 li { margin: 4px 0; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 22px; margin: 18px 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,.06); }
-.muted { color: var(--muted); font-size: 15px; }
-footer { max-width: 720px; margin: 0 auto; text-align: center; color: var(--muted); font-size: 14px; padding: 20px; border-top: 1px solid var(--line); }
+.slip { background: var(--card); border: 1px solid var(--card-border); border-radius: 4px; padding: 16px 20px; margin: 20px 0;
+  box-shadow: 2px 3px 0 var(--slip-shadow); transform: rotate(-.4deg); max-width: 62ch; }
+.muted { color: var(--ink2); font-size: 15px; margin-top: 0; }
+footer { max-width: 800px; margin: 0 auto; text-align: center; color: var(--on-desk); font-size: 14px; padding: 28px 0 32px; }
+footer a { color: var(--on-desk); }
+@media (max-width: 520px) {
+  body { padding: 10px 8px 0; font-size: 16px; }
+  .cloth { padding: 16px 16px 20px; gap: 12px; }
+  .cloth img { width: 52px; height: 52px; border-radius: 12px; }
+  nav { left: 12px; gap: 6px; }
+  nav a { width: 76px; font-size: 13px; }
+  .sheet { padding: 88px 16px 40px; }
+  h2 { font-size: 28px; }
+}
+@media (prefers-reduced-motion: reduce) { nav a { transition: none; } }
